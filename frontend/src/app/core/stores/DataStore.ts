@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import type { } from '@redux-devtools/extension' // required for devtools typing
 
-interface DataState {
+export interface DataState {
     dataStream: SmartMeter;
     updateMeter: (newMeterReading: SmartMeter) => void;
 }

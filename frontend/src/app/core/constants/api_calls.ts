@@ -10,5 +10,8 @@ export const WS_API = "ws://localhost:8001"
 export const API_ENDPOINTS = Object.freeze({
     CHECK: {
         VALIDATE: `${BASE_API}/meters/check`,
+    },
+    HOMEWIZARD : {
+        POLLING: `${WS_API}/ws/meter`
     }
 });

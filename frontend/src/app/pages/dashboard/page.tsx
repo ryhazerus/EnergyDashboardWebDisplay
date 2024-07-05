@@ -15,7 +15,6 @@ import { useDataStore } from "@/app/core/stores/DataStore";
 import { useRouter } from 'next/navigation'
 import MeterService from "@/app/core/services/MeterService";
 
-const meterService = new MeterService();
 
 
 export default function Home() {
@@ -23,6 +22,7 @@ export default function Home() {
   const router = useRouter();
   const connectionState = useConnectionStore();
   const dataState = useDataStore();
+  const meterService = new MeterService(dataState);
 
 
   useEffect(() => {
@@ -41,8 +41,8 @@ export default function Home() {
         <div className="row-span-3 mx-4 my-12 ...">
           <RadialGauge
             radius={150}
-            value={dataState.dataStream.total_energy_import_kwh}
-            maxValue={10000}
+            value={dataState.dataStream.active_power_w}
+            maxValue={5000}
             unit="w"
             gaugeBackground="#2c134d"
             gaugeHighlight="#8d37ff"

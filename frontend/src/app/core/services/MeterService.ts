@@ -1,6 +1,12 @@
 import { API_ENDPOINTS, WS_API } from "../constants/api_calls";
+import { DataState, useDataStore } from "../stores/DataStore";
 
 export default class MeterService {
+    dataState: DataState;
+
+    constructor(store: DataState) {
+        this.dataState = store
+    }
 
     async check(connection: MeterConnection) {
         try {
@@ -24,7 +30,7 @@ export default class MeterService {
     }
 
     async pollMeterData() {
-        const ws = new WebSocket(WS_API);
+        const ws = new WebSocket(API_ENDPOINTS.HOMEWIZARD.POLLING);
 
         // Open a connection to the server
         ws.onopen = () => {
@@ -38,6 +44,7 @@ export default class MeterService {
 
             if (response) {
                 // TODO: Set the response form the server in Zustand to populate the dashboard meters
+                this.dataState.updateMeter(response)
             }
         };
 
