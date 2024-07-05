@@ -7,3 +7,9 @@ interface SmartMeter {
 interface Configuration {
     is_valid: bool
 }
+
+
+interface MeterConnection {
+    meter_brand: string
+    meter_ip_address: string,
+}

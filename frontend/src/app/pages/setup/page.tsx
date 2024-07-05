@@ -2,14 +2,24 @@
 
 import { useEffect, useState } from "react"
 import { useRouter } from 'next/navigation'
-import MeterService, { MeterConnection } from "@/app/core/services/MeterService";
+import MeterService from "@/app/core/services/MeterService";
+import { useConnectionStore } from "@/app/core/store/ConnectionStore";
 
 const meterService = new MeterService();
 
 export default function Setup() {
     const router = useRouter();
+    const state = useConnectionStore()
+
     const [errors, setError] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+
+    useEffect(() => {
+        // TODO: this should be moved to an auth middleware
+        if (state.meter.meter_ip_address) {
+            router.push('/pages/dashboard', { scroll: false })
+        }
+    },)
 
     const checkConnection = async (meterConnection: MeterConnection) => {
 
@@ -19,8 +29,8 @@ export default function Setup() {
         // Perform meter check, if the response is valid redirect to dashboard
         meterService.check(meterConnection)
             .then(response => {
-                // TODO: Remove console.log after development
-                console.log("Check successful:");
+                // Save meter to local storage for next sessions
+                state.setMeter(meterConnection)
                 router.push('/pages/dashboard', { scroll: false })
             })
             .catch(error => {
