@@ -3,13 +3,13 @@
 import { useEffect, useState } from "react"
 import { useRouter } from 'next/navigation'
 import MeterService from "@/app/core/services/MeterService";
-import { useConnectionStore } from "@/app/core/store/ConnectionStore";
+import { useConnectionStore } from "@/app/core/stores/ConnectionStore";
 
 const meterService = new MeterService();
 
 export default function Setup() {
     const router = useRouter();
-    const state = useConnectionStore()
+    const state = useConnectionStore();
 
     const [errors, setError] = useState("");
     const [isLoading, setIsLoading] = useState(false);

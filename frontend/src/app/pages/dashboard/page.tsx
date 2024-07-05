@@ -10,26 +10,29 @@ import sun from "./icons/sun.svg"
 import thermometer from "./icons/thermometer.svg"
 import arrowUp from "./icons/arrow-up.svg"
 import arrowDown from "./icons/arrow-down.svg"
+import { useConnectionStore } from "@/app/core/stores/ConnectionStore";
+import { useDataStore } from "@/app/core/stores/DataStore";
+import { useRouter } from 'next/navigation'
+import MeterService from "@/app/core/services/MeterService";
 
-const data_mock: SmartMeter = {
-  active_power_w: 0,
-  gas_today: 0,
-  total_energy_import_kwh: 10
-}
+const meterService = new MeterService();
 
-
-// TODO: Define list of available meters
 
 export default function Home() {
-  // TODO: load the Zustand state here
-  const [data, setData] = useState(data_mock);
+
+  const router = useRouter();
+  const connectionState = useConnectionStore();
+  const dataState = useDataStore();
+
 
   useEffect(() => {
-    // TODO: Set meter check here to see if we are connected to a smart meter
+    // Set meter check here to see if we are connected to a smart meter
+    if (!!connectionState.meter.meter_ip_address) {
+      router.push('/pages/setup', { scroll: false })
+    }
 
-    // TODO: Start websocket service here
-
-
+    // Start websocket service, this might need some error handling
+    meterService.pollMeterData();
   }, []);
 
   return (
@@ -38,7 +41,7 @@ export default function Home() {
         <div className="row-span-3 mx-4 my-12 ...">
           <RadialGauge
             radius={150}
-            value={data.active_power_w}
+            value={dataState.dataStream.total_energy_import_kwh}
             maxValue={10000}
             unit="w"
             gaugeBackground="#2c134d"
@@ -47,8 +50,8 @@ export default function Home() {
           />
           <ComparisonGauge
             valueInIcon={arrowUp}
-            valueIn={11.8}
-            valueOut={14.5}
+            valueIn={0}
+            valueOut={0}
             valueOutIcon={arrowDown}
             unit={'kWh'}
 
@@ -68,7 +71,7 @@ export default function Home() {
         <div className="row-span-2 col-span-2 ...">
           <RadialGauge
             radius={110}
-            value={Math.round(data.gas_today * 100) / 100}
+            value={0}
             maxValue={10}
             unit="m3"
             gaugeBackground="#501228"
@@ -79,7 +82,7 @@ export default function Home() {
         <div className="mx-8 col-span-2 ...">
           <MeterGauge
             icon={flame}
-            value={12.67}
+            value={0}
             minValue={0}
             maxValue={100}
             unit={"€"}
@@ -93,7 +96,7 @@ export default function Home() {
         <div className="mx-8 col-span-2 ...">
           <MeterGauge
             icon={sun}
-            value={18.32}
+            value={0}
             minValue={0}
             maxValue={35}
             unit={"kWh"}
@@ -107,7 +110,7 @@ export default function Home() {
         <div className="mx-8 col-span-2 ...">
           <MeterGauge
             icon={thermometer}
-            value={21}
+            value={0}
             minValue={0}
             maxValue={50}
             unit={"°C"}
