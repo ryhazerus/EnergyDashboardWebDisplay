@@ -1,12 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import RadialGauge from "../components/RadialGauge";
-import MeterGauge from "../components/MeterGauge";
+import RadialGauge from "../../components/gauges/RadialGauge";
+import MeterGauge from "../../components/gauges/MeterGauge";
 import sun from "./sun.svg"
 import thermometer from "./thermometer.svg"
 import flame from "./flame.svg"
-import ComparisonGauge from "../components/ComparisonGauge";
+import ComparisonGauge from "../../components/gauges/ComparisonGauge";
 import arrowUp from "./arrow-up.svg"
 import arrowDown from "./arrow-down.svg"
 

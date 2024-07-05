@@ -1,4 +1,4 @@
-# Energy Display for Web
+# P1 Energy Dashboard ⚡
 
 A self-hosted webapp for displaying information of a P1 smart meter. Currently the system is in development and only supports the `HomeWizard P1 Smart Meter`. **NOTE:** Currently this whole system is purely an empty UI shell there is no connectivity with a backend server or smart meter yet.
 
