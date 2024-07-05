@@ -3,12 +3,13 @@
 import { useEffect, useState } from "react";
 import RadialGauge from "../../components/gauges/RadialGauge";
 import MeterGauge from "../../components/gauges/MeterGauge";
-import sun from "./sun.svg"
-import thermometer from "./thermometer.svg"
-import flame from "./flame.svg"
 import ComparisonGauge from "../../components/gauges/ComparisonGauge";
-import arrowUp from "./arrow-up.svg"
-import arrowDown from "./arrow-down.svg"
+
+import flame from "./icons/flame.svg"
+import sun from "./icons/sun.svg"
+import thermometer from "./icons/thermometer.svg"
+import arrowUp from "./icons/arrow-up.svg"
+import arrowDown from "./icons/arrow-down.svg"
 
 const data_mock: SmartMeter = {
   active_power_w: 0,
@@ -16,42 +17,20 @@ const data_mock: SmartMeter = {
   total_energy_import_kwh: 10
 }
 
+
+// TODO: Define list of available meters
+
 export default function Home() {
+  // TODO: load the Zustand state here
   const [data, setData] = useState(data_mock);
 
   useEffect(() => {
-    initWebsocket();
+    // TODO: Set meter check here to see if we are connected to a smart meter
+
+    // TODO: Start websocket service here
+
+
   }, []);
-
-  const initWebsocket = () => {
-    const ws = new WebSocket(
-      "ws://localhost:8001"
-    );
-
-    ws.onopen = () => {
-      console.log("Connection Established!");
-    };
-    ws.onmessage = (event) => {
-      const response = JSON.parse(event.data);
-      console.log(response)
-      if (response) {
-        setData(response)
-      }
-
-    };
-    ws.onclose = () => {
-      console.log("Connection Closed!");
-      initWebsocket();
-    };
-
-    ws.onerror = (err) => {
-      console.log("WS Error", err);
-    };
-
-    return () => {
-      ws.close();
-    };
-  }
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
