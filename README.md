@@ -8,6 +8,7 @@ This is a self-hosted web-ui for running an energy dashboard for your smart mete
 
 ### Roadmap
 
+- [x] Nothing is currently working but everything is there
 - [ ] Support Static Meters for Energy, Water and Gas Usage
 - [ ] Add local db for graphing information
 - [ ] Add Configurable Meters for users
@@ -42,7 +43,7 @@ Contributors names and contact info
 
 ## License
 
-This project is licensed under the [NAME HERE] License - see the LICENSE.md file for details
+This project is licensed under the MIT License - see the LICENSE.md file for details
 
 ## Acknowledgements
 
