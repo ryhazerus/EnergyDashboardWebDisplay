@@ -14,18 +14,13 @@ router = APIRouter()
 @router.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
-    while True:
-        data = await websocket.receive_text()
-        await websocket.send_text(f"Message text was: {data}")
-
-
-async def handler(websocket, ip_address: str):
     db_handler = GasMeterDatabaseHandler()
 
+    # TODO: This should be retrieved from the database
+    ip_address = "192.168.2.95"
     async with HomeWizardEnergy(host=ip_address) as api:
         while True:
             data = await api.data()  # Get measurements, like power or water usage
-
             external_modules = data.external_devices
 
             if external_modules:
