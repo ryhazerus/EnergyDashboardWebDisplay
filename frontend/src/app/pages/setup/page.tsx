@@ -72,14 +72,15 @@ export default function Setup() {
 
     return (
         <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
-
+            {/* Container for configuration setup */}
             <div className="pb-5 mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
                 <h1 className="text-2xl font-semibold leading-6 text-gray-200">P1 Energy Dashboard⚡</h1>
                 <p className="mt-2 max-w-4xl text-sm text-gray-300">You have successfully installed the P1 Energy Dashboard for Web. Please finish your setup to go to the display dashboard.</p>
                 <div className="border-b border-gray-200 py-4"></div>
                 <div className="overflow-hidden rounded-lg bg-black shadow my-8 border border-gray-700">
                     <div className="px-4 py-5 sm:p-6">
-                        <form onSubmit={onSubmit} method="GET">
+                        {/* Configuration form for setting up the P1 meter dashboard */}
+                        <form onSubmit={onSubmit} method="POST">
                             <div>
                                 <div className="my-2">
                                     <label htmlFor="location" className="block text-sm font-medium leading-6">
@@ -108,14 +109,14 @@ export default function Setup() {
                                         </svg>
                                         Loading...
                                     </button>
-
+                                    {/* Reactive-ish form errors to display to the user... this could be nicer... */}
                                     {errors ? (<p className="text-red-400 text-center">{errors}</p>) : ""}
                                 </div>
                             </div>
                         </form>
-
                     </div>
                 </div>
+                {/* Disclaimer for users warning state of software */}
                 <p className="mt-2 max-w-4xl text-sm text-gray-400"><span className="text-white">Disclaimer:</span> This is an <span className="underline">unofficial</span> app that comes without any support. We are not affiliated with any of the brands we support. If you&apos;re experiencing problems please submit a ticket on our <a className="underline" href="https://github.com/ryhazerus">Github page</a> and we will try to help.</p>
             </div>
         </div>
