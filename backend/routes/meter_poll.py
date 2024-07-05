@@ -13,7 +13,7 @@ router = APIRouter(
 )
 
 
-@router.websocket("/poll")
+@router.websocket("/meter")
 async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
     db_handler = GasMeterDatabaseHandler()
@@ -28,12 +28,17 @@ async def websocket_endpoint(websocket: WebSocket):
             if external_modules:
                 for key, modules in external_modules.items():
                     if modules.meter_type.value == ExternalDevice.DeviceType.GAS_METER.value:
-                        await db_handler.insert_reading(modules.unique_id, modules.meter_type.name, modules.timestamp,
-                                                  modules.value, modules.unit)
+                        db_handler.insert_reading(
+                            modules.unique_id,
+                            modules.meter_type.name,
+                            modules.timestamp,
+                            modules.value,
+                            modules.unit
+                        )
 
             data_dict = asdict(data)
-            gas_today = await db_handler.get_todays_usage()
-            data_dict['gas_today'] = gas_today[1]
+            data_dict['gas_today'] = db_handler.get_todays_usage()[1]
 
-            await websocket.send(json.dumps(data_dict, indent=4, sort_keys=True, default=str))
+            formatted_message = json.dumps(data_dict, indent=4, sort_keys=True, default=str)
+            await websocket.send_text(formatted_message)
             await asyncio.sleep(5)
