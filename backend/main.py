@@ -10,7 +10,7 @@ app = FastAPI()
 origins = [
     "http://localhost",
     "http://localhost:3000",
-    "http://localhost:8080",
+    "http://localhost:8000",
 ]
 
 app.add_middleware(
@@ -25,4 +25,4 @@ app.include_router(check_meter.router)
 app.include_router(meter_poll.router)
 
 if __name__ == '__main__':
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="127.0.0.1", port=8000)
