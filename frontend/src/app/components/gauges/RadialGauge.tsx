@@ -82,7 +82,7 @@ export default function RadialGauge(props: RadialGaugeProps) {
                 fontSize={calcFontSize(props.radius)}
                 fontWeight="bold"
                 dy=".3em"
-            >{props.value}
+            >{props.value ?? 0}
             </text>
             {/* <!-- Unit notation --> */}
             <text

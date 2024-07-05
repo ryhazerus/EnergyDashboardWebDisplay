@@ -3,7 +3,7 @@
   <component name="Black">
     <option name="sdkName" value="Poetry (pythonProject)" />
   </component>
-  <component name="ProjectRootManager" version="2" project-jdk-name="Poetry (pythonProject)" project-jdk-type="Python SDK" />
+  <component name="ProjectRootManager" version="2" project-jdk-name="Poetry (backend)" project-jdk-type="Python SDK" />
   <component name="PyCharmProfessionalAdvertiser">
     <option name="shown" value="true" />
   </component>
