@@ -20,7 +20,5 @@ class BaseValidator(ABC):
 
     @staticmethod
     def is_valid_ip(ip: str):
-        pattern = re.compile(
-            r"^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
-        )
+        pattern = re.compile(r"^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$")
         return bool(pattern.match(ip))

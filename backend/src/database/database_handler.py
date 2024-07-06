@@ -7,7 +7,11 @@ __all__ = ["db_handler"]
 
 class DatabaseHandler:
     def __init__(self, db_name: str):
-        self.db_name = db_name
+        # TODO: Should probably be using SQLAlchemy but... oh wel... poc life...
+        # TODO: Should make cursor a class obj? Not sure of performance issues.. its local
+        # TODO: Should add session filter for setting meter id
+        # TODO: This is a lot.... lol
+        self.db_name = f"./database/{db_name}"
 
     @contextmanager
     def connect(self):
@@ -73,9 +77,7 @@ class DatabaseHandler:
             """
             )
 
-    def insert_smart_meter(
-        self, meter_type: str, meter_name: str, timestamp: str, ip_address: str
-    ):
+    def insert_smart_meter(self, meter_type: str, meter_name: str, timestamp: str, ip_address: str):
         with self.connect() as conn:
             cursor = conn.cursor()
             cursor.execute(
@@ -143,8 +145,17 @@ class DatabaseHandler:
 
     def get_smart_meters(self) -> List[Tuple]:
         with self.connect() as conn:
+            conn.row_factory = sqlite3.Row
             cursor = conn.cursor()
-            cursor.execute("SELECT * FROM smart_meters")
+            cursor.execute("SELECT * FROM smart_meters LIMIT 1")
+            return cursor.fetchall()
+
+    def get_smart_meter_by_id(self, meter_id: int) -> List[Tuple]:
+        with self.connect() as conn:
+            conn.row_factory = sqlite3.Row
+            cursor = conn.cursor()
+
+            cursor.execute(f"SELECT * FROM smart_meters WHERE id == {meter_id} LIMIT 1")
             return cursor.fetchall()
 
     def get_gas_readings(self) -> List[Tuple]:
@@ -152,6 +163,25 @@ class DatabaseHandler:
             cursor = conn.cursor()
             cursor.execute("SELECT * FROM gas_readings")
             return cursor.fetchall()
+
+    def get_gas_readings_today(self) -> List[Tuple]:
+        with self.connect() as conn:
+            cursor = conn.cursor()
+            cursor.execute(
+                """
+              SELECT 
+                  date(timestamp) AS date,
+                  MAX(value) - MIN(value) AS daily_usage
+              FROM 
+                  gas_readings
+              WHERE
+                  date(timestamp) = date('now', 'localtime', 'start of day')
+              GROUP BY 
+                  date
+               """
+            )
+            row = cursor.fetchone()
+            return row if row else ("No data", 0.1)
 
     def get_energy_readings(self) -> List[Tuple]:
         with self.connect() as conn:
