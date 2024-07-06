@@ -27,7 +27,7 @@ export default function Home() {
 
   useEffect(() => {
     // Set meter check here to see if we are connected to a smart meter
-    if (!!connectionState.meter.meter_ip_address) {
+    if (!connectionState.meter.meter_ip_address) {
       router.push('/pages/setup', { scroll: false })
     }
 
@@ -71,7 +71,7 @@ export default function Home() {
         <div className="row-span-2 col-span-2 ...">
           <RadialGauge
             radius={110}
-            value={0}
+            value={dataState.dataStream.edx_gas_live}
             maxValue={10}
             unit="m3"
             gaugeBackground="#501228"

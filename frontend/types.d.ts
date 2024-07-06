@@ -57,6 +57,7 @@ interface SmartMeter {
     gas_unique_id: string;
     active_liter_lpm: number | null;
     total_liter_m3: number | null;
+    edx_gas_live: number;
     external_devices: {
         [key: string]: ExternalDevice;
     };
