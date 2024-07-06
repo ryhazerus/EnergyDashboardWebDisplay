@@ -4,18 +4,12 @@ FROM node:18-alpine AS builder
 
 WORKDIR /app
 
-COPY package*.json ./
+COPY . .
 
 RUN npm install
 
-COPY . .
-
 RUN npm run build
 
-# Stage 2: Serve the static files using Nginx
-FROM nginx:alpine
+EXPOSE 8001
 
-COPY --from=builder /app/out /usr/share/nginx/html
-
-# Copy Nginx configuration file
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+CMD ["npm", "run", "prod"]

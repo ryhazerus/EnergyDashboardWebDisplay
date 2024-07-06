@@ -8,8 +8,7 @@ import ComparisonGauge from "../../components/gauges/ComparisonGauge";
 import flame from "./icons/flame.svg"
 import sun from "./icons/sun.svg"
 import thermometer from "./icons/thermometer.svg"
-import arrowUp from "./icons/arrow-up.svg"
-import arrowDown from "./icons/arrow-down.svg"
+
 import { useConnectionStore } from "@/app/core/stores/ConnectionStore";
 import { useDataStore } from "@/app/core/stores/DataStore";
 import { useRouter } from 'next/navigation'
@@ -49,12 +48,9 @@ export default function Home() {
             fontColor="#eaeaea"
           />
           <ComparisonGauge
-            valueInIcon={arrowUp}
             valueIn={0.00}
             valueOut={(dataState.dataStream.edx_energy_live / 1000)}
-            valueOutIcon={arrowDown}
             unit={'kWh'}
-
           />
         </div>
         <div className="col-span-2 ...">
@@ -81,7 +77,7 @@ export default function Home() {
         </div>
         <div className="mx-8 col-span-2 ...">
           <MeterGauge
-            icon={flame}
+            icon={'/icons/flame.svg'}
             value={0}
             minValue={0}
             maxValue={100}
@@ -95,7 +91,7 @@ export default function Home() {
         </div>
         <div className="mx-8 col-span-2 ...">
           <MeterGauge
-            icon={sun}
+            icon={'/icons/sun.svg'}
             value={0}
             minValue={0}
             maxValue={35}
@@ -109,7 +105,7 @@ export default function Home() {
         </div>
         <div className="mx-8 col-span-2 ...">
           <MeterGauge
-            icon={thermometer}
+            icon={'/icons/thermometer.svg'}
             value={0}
             minValue={0}
             maxValue={50}

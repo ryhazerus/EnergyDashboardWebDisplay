@@ -1,4 +1,4 @@
-import type { TailwindColor } from "./types/tailwind";
+import { TailwindColor } from "./tailwindBaseColors";
 
 const MAP_COLOR_VARIANT_TO_BG: Record<TailwindColor, string> = {
   orange: "bg-orange-500",

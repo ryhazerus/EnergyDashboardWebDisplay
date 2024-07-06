@@ -2,7 +2,7 @@ import Image from 'next/image'
 
 
 interface MeterGaugeProps {
-    icon: JSX.Element;
+    icon: string;
     value: number;
     minValue: number;
     maxValue: number;

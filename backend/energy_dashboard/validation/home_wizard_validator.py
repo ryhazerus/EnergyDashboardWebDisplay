@@ -1,4 +1,4 @@
-from src.validation.base.validator import BaseValidator
+from energy_dashboard.validation.base.validator import BaseValidator
 from homewizard_energy import HomeWizardEnergy
 
 

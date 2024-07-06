@@ -1,6 +1,12 @@
 # P1 Energy Dashboard ⚡
 
-A self-hosted webapp for displaying information of a P1 smart meter. Currently the system is in development and only supports the `HomeWizard P1 Smart Meter`. **NOTE:** Currently this whole system is purely an empty UI shell there is no connectivity with a backend server or smart meter yet.
+> ⚠️Everything is working but this is still in development ⚠️
+
+A self-hosted webapp for displaying information of a P1 smart meter. Currently the system is in development and only supports the `HomeWizard P1 Smart Meter`.
+
+### Shortcomings
+
+- ⚠️ Has not yet been tested on a linux host but should work
 
 ## Description
 
@@ -9,8 +15,10 @@ This is a self-hosted web-ui for running an energy dashboard for your smart mete
 ### Roadmap
 
 - [x] Nothing is currently working but everything is there
-- [ ] Support Static Meters for Energy, Water and Gas Usage
-- [ ] Add local db for graphing information
+- [x] Support Static Meters for Energy, Water and Gas Usage
+- [x] Add local db for graphing information
+- [ ] Add exporting data feature
+- [ ] Add configurable tariffs for gas/energy prices
 - [ ] Add Configurable Meters for users
 - [ ] Support other smart meters
 

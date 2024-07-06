@@ -1,9 +1,9 @@
 from fastapi import APIRouter
 import datetime
-from src.database.database_handler import db_handler
-from src.models.connection_request import ConnectionRequest
-from src.models.response import DefaultResponse
-from src.validation.base import valid_meter
+from energy_dashboard.database.database_handler import db_handler
+from energy_dashboard.models.connection_request import ConnectionRequest
+from energy_dashboard.models.response import DefaultResponse
+from energy_dashboard.validation.base import valid_meter
 
 router = APIRouter(prefix="/meters")
 

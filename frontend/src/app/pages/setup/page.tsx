@@ -4,8 +4,9 @@ import { useEffect, useState } from "react"
 import { useRouter } from 'next/navigation'
 import MeterService from "@/app/core/services/MeterService";
 import { useConnectionStore } from "@/app/core/stores/ConnectionStore";
+import { DataState } from "@/app/core/stores/DataStore";
 
-const meterService = new MeterService();
+const meterService = new MeterService({} as DataState);
 
 export default function Setup() {
     const router = useRouter();

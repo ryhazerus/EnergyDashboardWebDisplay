@@ -1,5 +1,5 @@
-from src.models.connection_request import ConnectionRequest
-from src.validation.home_wizard_validator import HomeWizardValidator
+from energy_dashboard.models.connection_request import ConnectionRequest
+from energy_dashboard.validation.home_wizard_validator import HomeWizardValidator
 
 
 async def valid_meter(request: ConnectionRequest):

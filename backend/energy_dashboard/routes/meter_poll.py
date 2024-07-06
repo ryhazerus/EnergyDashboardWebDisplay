@@ -8,8 +8,8 @@ from homewizard_energy import HomeWizardEnergy, ExternalDevice
 from pydantic import parse_obj_as
 from starlette.websockets import WebSocket
 
-from src.database.database_handler import db_handler
-from src.models.smart_meter import SmartMeter
+from energy_dashboard.database.database_handler import db_handler
+from energy_dashboard.models.smart_meter import SmartMeter
 
 router = APIRouter(prefix="/ws")
 

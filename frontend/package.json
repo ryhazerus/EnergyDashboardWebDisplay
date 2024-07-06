@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "prod": "next start -p 8001"
   },
   "dependencies": {
     "@redux-devtools/extension": "^3.3.0",

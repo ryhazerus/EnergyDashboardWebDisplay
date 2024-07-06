@@ -11,7 +11,7 @@ class DatabaseHandler:
         # TODO: Should make cursor a class obj? Not sure of performance issues.. its local
         # TODO: Should add session filter for setting meter id
         # TODO: This is a lot.... lol
-        self.db_name = f"./database/{db_name}"
+        self.db_name = db_name
 
     @contextmanager
     def connect(self):
