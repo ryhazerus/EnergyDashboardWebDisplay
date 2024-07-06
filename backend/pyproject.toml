@@ -13,6 +13,7 @@ fastapi = "^0.111.0"
 requests = "^2.32.3"
 pydantic = "^2.8.0"
 python-homewizard-energy = "^6.0.0"
+pytest = "^8.2.2"
 
 [build-system]
 requires = ["poetry-core"]
