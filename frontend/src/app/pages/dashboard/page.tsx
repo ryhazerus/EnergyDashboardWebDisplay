@@ -51,7 +51,7 @@ export default function Home() {
           <ComparisonGauge
             valueInIcon={arrowUp}
             valueIn={0}
-            valueOut={0}
+            valueOut={(dataState.dataStream.edx_energy_live /1000)}
             valueOutIcon={arrowDown}
             unit={'kWh'}
 

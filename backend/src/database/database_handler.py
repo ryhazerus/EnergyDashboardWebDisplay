@@ -189,6 +189,25 @@ class DatabaseHandler:
             cursor.execute("SELECT * FROM energy_readings")
             return cursor.fetchall()
 
+    def get_energy_readings_today(self) -> List[Tuple]:
+        with self.connect() as conn:
+            cursor = conn.cursor()
+            cursor.execute(
+                """
+              SELECT 
+                  date(timestamp) AS date,
+                  MAX(value) - MIN(value) AS daily_usage
+              FROM 
+                  energy_readings
+              WHERE
+                  date(timestamp) = date('now', 'localtime', 'start of day')
+              GROUP BY 
+                  date
+               """
+            )
+            row = cursor.fetchone()
+            return row if row else ("No data", 0.1)
+
     def get_water_readings(self) -> List[Tuple]:
         with self.connect() as conn:
             cursor = conn.cursor()
