@@ -1,3 +1,5 @@
+import { formatRounding } from "@/app/core/utils/formatting";
+
 interface RadialGaugeProps {
     radius: number;
     value: number;
@@ -82,7 +84,7 @@ export default function RadialGauge(props: RadialGaugeProps) {
                 fontSize={calcFontSize(props.radius)}
                 fontWeight="bold"
                 dy=".3em"
-            >{props.value ?? 0}
+            >{formatRounding(props.value) ?? 0}
             </text>
             {/* <!-- Unit notation --> */}
             <text

@@ -196,7 +196,7 @@ class DatabaseHandler:
                 """
               SELECT 
                   date(timestamp) AS date,
-                  MAX(value) - MIN(value) AS daily_usage
+                    SUM(value) AS daily_usage
               FROM 
                   energy_readings
               WHERE

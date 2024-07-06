@@ -50,8 +50,8 @@ export default function Home() {
           />
           <ComparisonGauge
             valueInIcon={arrowUp}
-            valueIn={0}
-            valueOut={(dataState.dataStream.edx_energy_live /1000)}
+            valueIn={0.00}
+            valueOut={(dataState.dataStream.edx_energy_live / 1000)}
             valueOutIcon={arrowDown}
             unit={'kWh'}
 
@@ -60,7 +60,7 @@ export default function Home() {
         <div className="col-span-2 ...">
           <RadialGauge
             radius={90}
-            value={0}
+            value={0.00}
             maxValue={100}
             unit="L"
             gaugeBackground="#1b3b50"
