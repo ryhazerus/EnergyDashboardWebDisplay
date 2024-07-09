@@ -49,7 +49,7 @@ export default function Home() {
           />
           <ComparisonGauge
             valueIn={0.00}
-            valueOut={(dataState.dataStream.edx_energy_live / 1000)}
+            valueOut={(((dataState.dataStream.edx_energy_live * 5) / 3600) / 1000)}
             unit={'kWh'}
           />
         </div>

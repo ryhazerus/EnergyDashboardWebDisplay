@@ -10,6 +10,7 @@ app = FastAPI()
 origins = [
     "http://localhost",
     "http://localhost:3000",
+    "http://localhost:3001",
     "http://localhost:8000",
     "http://localhost:8001",
 ]
@@ -28,3 +29,7 @@ app.include_router(meter_poll.router)
 
 def start():
     uvicorn.run(app, host="0.0.0.0", port=8000)
+
+
+if __name__ == '__main__':
+    start()
