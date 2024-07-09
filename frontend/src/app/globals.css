@@ -16,13 +16,14 @@
   }
 }
 
-html {
-  background-color: black;
-}
-
 body {
   color: rgb(var(--foreground-rgb));
-  background: black
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
 }
 
 @layer utilities {
