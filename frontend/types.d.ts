@@ -1,5 +1,15 @@
 // TODO: Smart meter interface can be consolidated so that only relevant items are received
+
 interface SmartMeter {
+    data_p1_meter: P1Model;
+    edx_gas_live: number;
+    edx_energy_live: number;
+    edx_energy_export_live: number;
+    edx_water_live: number;
+    edx_gas_costs: number;
+}
+
+interface P1Model {
     wifi_ssid: string;
     wifi_strength: number;
     smr_version: number;
@@ -57,8 +67,6 @@ interface SmartMeter {
     gas_unique_id: string;
     active_liter_lpm: number | null;
     total_liter_m3: number | null;
-    edx_gas_live: number;
-    edx_energy_live:number;
     external_devices: {
         [key: string]: ExternalDevice;
     };

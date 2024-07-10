@@ -7,6 +7,7 @@ from energy_dashboard.routes import check_meter, meter_poll
 app = FastAPI()
 
 # Set configurations for FastAPI
+# TODO: Set the whitelisting accordingly
 origins = [
     "http://localhost",
     "http://localhost:3000",
@@ -31,5 +32,5 @@ def start():
     uvicorn.run(app, host="0.0.0.0", port=8000)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     start()

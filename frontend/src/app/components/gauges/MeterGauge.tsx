@@ -58,8 +58,8 @@ export default function MeterGauge(props: MeterGaugeProps) {
                 </div>
                 <div className="flex">
                     <svg height={props.height} width={props.width}>
-                        <line x1="10" y1="10" x2={props.width - 8} y2="10" stroke-linecap="round" stroke-width="10" style={meterStyle} />
-                        <line x1="10" y1="10" x2={calcRelativeLength(props.value, props.minValue, props.maxValue, props.width)} y2="10" stroke-linecap="round" stroke-width="10" style={meterValueStyle} />
+                        <line x1="10" y1="10" x2={props.width - 8} y2="10" strokeLinecap="round" strokeWidth="10" style={meterStyle} />
+                        <line x1="10" y1="10" x2={calcRelativeLength(props.value, props.minValue, props.maxValue, props.width)} y2="10" strokeLinecap="round" strokeWidth="10" style={meterValueStyle} />
                     </svg>
                 </div>
             </div>

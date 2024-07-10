@@ -26,9 +26,10 @@ export default function RadialGauge(props: RadialGaugeProps) {
 
     // Function to calculate stroke dash array based on value and maxValue
     const calcDashArray = (value: number, maxValue: number, radius: number) => {
-        const circumference =
-            2 * Math.PI * calcInnerRadius(radius, calcStrokeWidth(radius));
-        return `${(value / maxValue) * circumference} ${circumference}`;
+        const circumference = 2 * Math.PI * calcInnerRadius(radius, calcStrokeWidth(radius));
+        const result = `${(value / maxValue) * circumference} ${circumference}`;
+
+        return String(result);
     };
 
     // Function to calculate stroke dash offset to start the gauge fill from the correct position

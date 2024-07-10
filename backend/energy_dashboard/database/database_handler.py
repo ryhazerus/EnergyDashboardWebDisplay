@@ -201,6 +201,27 @@ class DatabaseHandler:
                   energy_readings
               WHERE
                   date(timestamp) = date('now', 'localtime', 'start of day')
+                   AND is_import = 0
+              GROUP BY 
+                  date
+               """
+            )
+            row = cursor.fetchone()
+            return row if row else ("No data", 0.1)
+
+    def get_energy_export_readings_today(self) -> List[Tuple]:
+        with self.connect() as conn:
+            cursor = conn.cursor()
+            cursor.execute(
+                """
+              SELECT 
+                  date(timestamp) AS date,
+                    SUM(value) AS daily_usage
+              FROM 
+                  energy_readings
+              WHERE
+                  date(timestamp) = date('now', 'localtime', 'start of day')
+                AND is_import = 1
               GROUP BY 
                   date
                """
@@ -213,6 +234,25 @@ class DatabaseHandler:
             cursor = conn.cursor()
             cursor.execute("SELECT * FROM water_readings")
             return cursor.fetchall()
+
+    def get_water_readings_today(self) -> List[Tuple]:
+        with self.connect() as conn:
+            cursor = conn.cursor()
+            cursor.execute(
+                """
+              SELECT 
+                  date(timestamp) AS date,
+                  MAX(value) - MIN(value) AS daily_usage
+              FROM 
+                  water_readings
+              WHERE
+                  date(timestamp) = date('now', 'localtime', 'start of day')
+              GROUP BY 
+                  date
+               """
+            )
+            row = cursor.fetchone()
+            return row if row else ("No data", 0.0)
 
 
 db_handler = DatabaseHandler("smart_meters.db")

@@ -5,10 +5,6 @@ import RadialGauge from "../../components/gauges/RadialGauge";
 import MeterGauge from "../../components/gauges/MeterGauge";
 import ComparisonGauge from "../../components/gauges/ComparisonGauge";
 
-import flame from "./icons/flame.svg"
-import sun from "./icons/sun.svg"
-import thermometer from "./icons/thermometer.svg"
-
 import { useConnectionStore } from "@/app/core/stores/ConnectionStore";
 import { useDataStore } from "@/app/core/stores/DataStore";
 import { useRouter } from 'next/navigation'
@@ -40,7 +36,7 @@ export default function Home() {
         <div className="row-span-3 mx-4 my-12 ...">
           <RadialGauge
             radius={150}
-            value={dataState.dataStream.active_power_w}
+            value={dataState.dataStream.data_p1_meter.active_power_w}
             maxValue={5000}
             unit="w"
             gaugeBackground="#2c134d"
@@ -48,7 +44,7 @@ export default function Home() {
             fontColor="#eaeaea"
           />
           <ComparisonGauge
-            valueIn={0.00}
+            valueIn={(((dataState.dataStream.edx_energy_export_live * 5) / 3600) / 1000)} 
             valueOut={(((dataState.dataStream.edx_energy_live * 5) / 3600) / 1000)}
             unit={'kWh'}
           />
@@ -56,7 +52,7 @@ export default function Home() {
         <div className="col-span-2 ...">
           <RadialGauge
             radius={90}
-            value={0.00}
+            value={dataState.dataStream.edx_water_live}
             maxValue={100}
             unit="L"
             gaugeBackground="#1b3b50"
@@ -117,6 +113,8 @@ export default function Home() {
             height={20}
           />
         </div>
+
+
       </div>
     </main>
   );
