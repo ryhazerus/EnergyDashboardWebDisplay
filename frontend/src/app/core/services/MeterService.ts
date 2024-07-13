@@ -8,7 +8,7 @@ export default class MeterService {
         this.dataState = store
     }
 
-    async check(connection: MeterConnection) {
+    async check(connection: UserConfiguration) {
         try {
             const response = await fetch(API_ENDPOINTS.CHECK.VALIDATE, {
                 method: "POST",

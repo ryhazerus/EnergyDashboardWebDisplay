@@ -19,7 +19,6 @@ export default function Home() {
   const dataState = useDataStore();
   const meterService = new MeterService(dataState);
 
-
   useEffect(() => {
     // Set meter check here to see if we are connected to a smart meter
     if (!connectionState.meter.meter_ip_address) {
@@ -30,13 +29,25 @@ export default function Home() {
     meterService.pollMeterData();
   }, []);
 
+  const calcGasUsageEur = (gas_price: number, gas_usage:number) => {
+    if (!gas_price){
+      gas_price = 0;
+    }
+
+    if (!gas_usage){
+      gas_usage = 0;
+    }
+
+    return gas_price * gas_usage;
+  }
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div className="grid grid-rows-3 grid-flow-col gap-4">
         <div className="row-span-3 mx-4 my-12 ...">
           <RadialGauge
             radius={150}
-            value={dataState.dataStream.data_p1_meter.active_power_w}
+            value={dataState.dataStream?.data_p1_meter?.active_power_w}
             maxValue={5000}
             unit="w"
             gaugeBackground="#2c134d"
@@ -74,7 +85,7 @@ export default function Home() {
         <div className="mx-8 col-span-2 ...">
           <MeterGauge
             icon={'/icons/flame.svg'}
-            value={0}
+            value={calcGasUsageEur(dataState.dataStream?.edx_gas_costs, dataState.dataStream.edx_gas_live)}
             minValue={0}
             maxValue={100}
             unit={"€"}
@@ -88,7 +99,7 @@ export default function Home() {
         <div className="mx-8 col-span-2 ...">
           <MeterGauge
             icon={'/icons/sun.svg'}
-            value={0}
+            value={dataState.dataStream.edx_energy_export_live ?? 0.00}
             minValue={0}
             maxValue={35}
             unit={"kWh"}

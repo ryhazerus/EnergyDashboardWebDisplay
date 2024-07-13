@@ -59,6 +59,7 @@ async def websocket_endpoint(websocket: WebSocket):
             model.edx_energy_live = db_handler.get_energy_readings_today()[1]
             model.edx_water_live = db_handler.get_water_readings_today()[1]
             model.edx_energy_export_live = db_handler.get_energy_export_readings_today()[1]
+            model.edx_gas_costs = db_handler.get_user_preferences()[0]
 
             formatted_message = json.dumps(asdict(model), indent=4, sort_keys=True, default=str)
             await websocket.send_text(formatted_message)

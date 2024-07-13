@@ -10,7 +10,7 @@ class DatabaseHandler:
         # TODO: Should probably be using SQLAlchemy but... oh wel... poc life...
         # TODO: Should make cursor a class obj? Not sure of performance issues.. its local
         # TODO: Should add session filter for setting meter id
-        # TODO: This is a lot.... lol
+        # TODO: This is a lot of todos.... lol
         self.db_name = db_name
 
     @contextmanager
@@ -27,14 +27,22 @@ class DatabaseHandler:
             cursor = conn.cursor()
             cursor.execute(
                 """
-                CREATE TABLE IF NOT EXISTS smart_meters (
-                    id INTEGER PRIMARY KEY,
-                    meter_type TEXT,
-                    meter_name TEXT,
-                    timestamp TEXT,
-                    ip_address TEXT
-                )
-            """
+                    CREATE TABLE IF NOT EXISTS smart_meters (
+                        id INTEGER PRIMARY KEY,
+                        meter_type TEXT,
+                        meter_name TEXT,
+                        timestamp TEXT,
+                        ip_address TEXT
+                    )
+                """
+            )
+            cursor.execute(
+                """
+                    CREATE TABLE IF NOT EXISTS user_preferences (
+                        id INTEGER PRIMARY KEY,
+                        user_gas_price REAL
+                    )
+                """
             )
             cursor.execute(
                 """
@@ -88,13 +96,36 @@ class DatabaseHandler:
                 (meter_type, meter_name, timestamp, ip_address),
             )
 
+    def insert_user_preferences(self, price: str):
+        with self.connect() as conn:
+            cursor = conn.cursor()
+            cursor.execute(
+                """
+                INSERT INTO user_preferences (user_gas_price)
+                VALUES (?)
+                """,
+                (price,),
+            )
+
+    def get_user_preferences(self):
+        with self.connect() as conn:
+            cursor = conn.cursor()
+            cursor.execute(
+                """
+                SELECT user_gas_price FROM user_preferences;
+                """,
+            )
+
+            row = cursor.fetchone()
+            return row if row else ("No data", 0.0)
+
     def insert_gas_reading(
-        self,
-        meter_type: str,
-        smart_meter_id: int,
-        timestamp: str,
-        value: str,
-        unit: str,
+            self,
+            meter_type: str,
+            smart_meter_id: int,
+            timestamp: str,
+            value: str,
+            unit: str,
     ):
         with self.connect() as conn:
             cursor = conn.cursor()
@@ -107,13 +138,13 @@ class DatabaseHandler:
             )
 
     def insert_energy_reading(
-        self,
-        meter_type: str,
-        smart_meter_id: int,
-        timestamp: str,
-        value: str,
-        unit: str,
-        is_import: bool,
+            self,
+            meter_type: str,
+            smart_meter_id: int,
+            timestamp: str,
+            value: str,
+            unit: str,
+            is_import: bool,
     ):
         with self.connect() as conn:
             cursor = conn.cursor()
@@ -126,12 +157,12 @@ class DatabaseHandler:
             )
 
     def insert_water_reading(
-        self,
-        meter_type: str,
-        smart_meter_id: int,
-        timestamp: str,
-        value: str,
-        unit: str,
+            self,
+            meter_type: str,
+            smart_meter_id: int,
+            timestamp: str,
+            value: str,
+            unit: str,
     ):
         with self.connect() as conn:
             cursor = conn.cursor()

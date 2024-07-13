@@ -2,7 +2,7 @@ import uvicorn
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
-from energy_dashboard.routes import check_meter, meter_poll
+from energy_dashboard.routes import preferences, meter
 
 app = FastAPI()
 
@@ -24,8 +24,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(check_meter.router)
-app.include_router(meter_poll.router)
+app.include_router(preferences.router)
+app.include_router(meter.router)
 
 
 def start():

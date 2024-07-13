@@ -1,4 +1,9 @@
 // TODO: Smart meter interface can be consolidated so that only relevant items are received
+interface UserConfiguration {
+    meter_brand: string
+    meter_ip_address: string,
+    user_gas_price: number
+}
 
 interface SmartMeter {
     data_p1_meter: P1Model;
@@ -86,10 +91,4 @@ enum DeviceType {
 
 interface Configuration {
     is_valid: bool
-}
-
-
-interface MeterConnection {
-    meter_brand: string
-    meter_ip_address: string,
 }

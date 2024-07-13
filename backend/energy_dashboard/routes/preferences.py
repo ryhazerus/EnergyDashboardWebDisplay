@@ -25,5 +25,8 @@ async def check_meter(conn_request: ConnectionRequest):
         ip_address=conn_request.meter_ip_address,
     )
 
+    db_handler.insert_user_preferences(conn_request.user_gas_price)
+
     # Return a valid response with the basic meter information
-    return DefaultResponse(status=200, message=f"{conn_request.meter_brand} Smart Meter Found", body=conn_request).model_dump()
+    return DefaultResponse(status=200, message=f"{conn_request.meter_brand} Smart Meter Found",
+                           body=conn_request).model_dump()
