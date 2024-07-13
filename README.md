@@ -16,6 +16,7 @@
 
 > **NOTE:** Temperature, functionality is not included in current build
 
+
 `P1 Energy Dashboard` is a self-hosted webapp for displaying information of a P1 smart meter. The system is in development and only supports the `HomeWizard P1 Smart Meter`. The easiest way to get started with the project is to clone or download this repository and run the docker compose file, but before you start make sure you have the prerequisites installed on your deployment environment.
 
 The web-app is easy to use and provides a setup screen once deployed to be able to configure the connection to your local P1 meter.
@@ -42,8 +43,9 @@ This project uses the following technologies:
 - [x] Nothing is currently working but everything is there
 - [x] Meters for Energy and Gas are included
 - [x] Local db for graphing daily usage is available
-- [ ] Meter for water is included
-- [ ] Configurable tariffs for gas/energy prices
+- [x] Meter for water is included
+- [x] Configurable tariffs for gas prices
+- [x] Configurable tariffs for energy prices
 - [ ] Configurable Meters for users
 - [ ] Export data is available for users
 
