@@ -10,6 +10,8 @@
     "prod": "next start -p 8001"
   },
   "dependencies": {
+    "@headlessui/react": "^2.1.2",
+    "@heroicons/react": "^2.1.5",
     "@redux-devtools/extension": "^3.3.0",
     "next": "14.2.4",
     "react": "^18",
