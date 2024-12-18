@@ -11,6 +11,28 @@ router = APIRouter(prefix="/meters")
 METER_TYPE = "P1"
 
 
+def parse_gas_price(gas_price):
+    """
+    Parses the input to determine a valid gas price.
+
+    Args:
+        gas_price: The input value to be parsed. It can be a float, string, or None.
+
+    Returns:
+        float: The parsed gas price. Returns 0.00 for invalid inputs.
+    """
+    try:
+        # Handle None or empty string inputs
+        if gas_price is None or (isinstance(gas_price, str) and gas_price.strip() == ""):
+            return 0.00
+
+        # Attempt to convert to float
+        return float(gas_price)
+    except (ValueError, TypeError):
+        # Return 0.00 for invalid conversions
+        return 0.00
+
+
 @router.post("/check")
 async def check_meter(conn_request: ConnectionRequest):
     # Validate meter settings by calling the designated meter API
@@ -25,7 +47,10 @@ async def check_meter(conn_request: ConnectionRequest):
         ip_address=conn_request.meter_ip_address,
     )
 
-    db_handler.insert_user_preferences(conn_request.user_gas_price)
+    # Always resolve to a valid gas price format
+    user_gas_price = parse_gas_price(conn_request.user_gas_price)
+
+    db_handler.insert_user_preferences(user_gas_price)
 
     # Return a valid response with the basic meter information
     return DefaultResponse(status=200, message=f"{conn_request.meter_brand} Smart Meter Found",

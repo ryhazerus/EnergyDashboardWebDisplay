@@ -2,7 +2,7 @@
 interface UserConfiguration {
     meter_brand: string
     meter_ip_address: string,
-    user_gas_price: number
+    user_gas_price: float
 }
 
 interface SmartMeter {
