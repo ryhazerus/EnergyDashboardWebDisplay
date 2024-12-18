@@ -12,6 +12,42 @@
 
 ![alt text](/docs/hero.png)
 
+## Getting Started
+
+To get started, simply follow these steps:
+
+1. Clone this repository to your local machine:
+
+   ```bash
+   git clone https://github.com/ryhazerus/EnergyDashboardWebDisplay
+   cd EnergyDashboardWebDisplay
+   ```
+
+2. Build and start the system using Docker Compose:
+
+   ```bash
+   docker compose up --build -d
+   ```
+
+3. Access the application:
+
+   - Frontend: [http://localhost:8001](http://localhost:8001)
+   - Backend: [http://localhost:8000](http://localhost:8000) (you shouldn't really need this one)
+
+The web-app will guide you through the setup process, including configuring the connection to your local P1 meter.
+
+---
+
+## Introduction 📁
+
+`P1 Energy Dashboard` is a self-hosted web application designed to display energy consumption data from a HomeWizard P1 Smart Meter. The system is currently in development and provides an easy-to-use interface for monitoring your energy usage.
+
+### Key Features
+
+- Local graphing of daily energy and gas usage.
+- Configurable tariffs for gas prices.
+- Simple setup process.
+
 ## Introduction 📑
 
 > **NOTE:** Temperature, functionality is not included in current build
@@ -43,9 +79,9 @@ This project uses the following technologies:
 - [x] Nothing is currently working but everything is there
 - [x] Meters for Energy and Gas are included
 - [x] Local db for graphing daily usage is available
-- [x] Meter for water is included
+- [ ] Meter for water is included
 - [x] Configurable tariffs for gas prices
-- [x] Configurable tariffs for energy prices
+- [ ] Configurable tariffs for energy prices
 - [ ] Configurable Meters for users
 - [ ] Export data is available for users
 
