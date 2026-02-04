@@ -15,7 +15,7 @@ class BaseValidator(ABC):
         self.__ip_address = ip_address
 
     @abstractmethod
-    def validate(self):
+    def validate(self, existing_token: str | None = None):
         raise NotImplementedError
 
     @staticmethod

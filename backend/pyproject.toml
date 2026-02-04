@@ -3,7 +3,6 @@ name = "energy_dashboard"
 version = "0.1.0"
 description = ""
 authors = ["Zahyr Seferina <zahyr.seferina@gmail.com>"]
-readme = "README.md"
 
 [tool.poetry.scripts]
 start = "energy_dashboard.main:start"
@@ -15,7 +14,7 @@ uvicorn = "^0.30.1"
 fastapi = "^0.111.0"
 requests = "^2.32.3"
 pydantic = "^2.8.0"
-python-homewizard-energy = "^6.0.0"
+python-homewizard-energy = "^10.0.0"
 pytest = "^8.2.2"
 sqlalchemy = "^2.0.31"
 

@@ -1,13 +1,13 @@
 import dataclasses
 from typing import Optional
 
-from homewizard_energy import Data
+from homewizard_energy.models import Measurement
 from pydantic import BaseModel, Field
 
 
 @dataclasses.dataclass
 class EnergyDisplayX:
-    data_p1_meter: Optional[Data] = None
+    data_p1_meter: Optional[Measurement] = None
 
     # Live values are accumulated values per day
     edx_gas_live: Optional[float] = 0.00

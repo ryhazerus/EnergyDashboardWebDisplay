@@ -32,10 +32,19 @@ class DatabaseHandler:
                         meter_type TEXT,
                         meter_name TEXT,
                         timestamp TEXT,
-                        ip_address TEXT
+                        ip_address TEXT,
+                        api_version TEXT DEFAULT 'v1',
+                        api_token TEXT
                     )
                 """
             )
+            # Migration: add columns for existing databases that predate v2 support
+            cursor.execute("PRAGMA table_info(smart_meters)")
+            columns = {row[1] for row in cursor.fetchall()}
+            if "api_version" not in columns:
+                cursor.execute("ALTER TABLE smart_meters ADD COLUMN api_version TEXT DEFAULT 'v1'")
+            if "api_token" not in columns:
+                cursor.execute("ALTER TABLE smart_meters ADD COLUMN api_token TEXT")
             cursor.execute(
                 """
                     CREATE TABLE IF NOT EXISTS user_preferences (
@@ -85,15 +94,15 @@ class DatabaseHandler:
             """
             )
 
-    def insert_smart_meter(self, meter_type: str, meter_name: str, timestamp: str, ip_address: str):
+    def insert_smart_meter(self, meter_type: str, meter_name: str, timestamp: str, ip_address: str, api_version: str = "v1", api_token: str | None = None):
         with self.connect() as conn:
             cursor = conn.cursor()
             cursor.execute(
                 """
-                INSERT INTO smart_meters (meter_type, meter_name, timestamp, ip_address)
-                VALUES (?, ?, ?, ?)
+                INSERT INTO smart_meters (meter_type, meter_name, timestamp, ip_address, api_version, api_token)
+                VALUES (?, ?, ?, ?, ?, ?)
             """,
-                (meter_type, meter_name, timestamp, ip_address),
+                (meter_type, meter_name, timestamp, ip_address, api_version, api_token),
             )
 
     def insert_user_preferences(self, price: str):
@@ -225,15 +234,15 @@ class DatabaseHandler:
             cursor = conn.cursor()
             cursor.execute(
                 """
-              SELECT 
+              SELECT
                   date(timestamp) AS date,
-                    SUM(value) AS daily_usage
-              FROM 
+                  MAX(value) - MIN(value) AS daily_usage
+              FROM
                   energy_readings
               WHERE
                   date(timestamp) = date('now', 'localtime', 'start of day')
-                   AND is_import = 0
-              GROUP BY 
+                   AND is_import = 1
+              GROUP BY
                   date
                """
             )
@@ -245,15 +254,15 @@ class DatabaseHandler:
             cursor = conn.cursor()
             cursor.execute(
                 """
-              SELECT 
+              SELECT
                   date(timestamp) AS date,
-                    SUM(value) AS daily_usage
-              FROM 
+                  MAX(value) - MIN(value) AS daily_usage
+              FROM
                   energy_readings
               WHERE
                   date(timestamp) = date('now', 'localtime', 'start of day')
-                AND is_import = 1
-              GROUP BY 
+                AND is_import = 0
+              GROUP BY
                   date
                """
             )

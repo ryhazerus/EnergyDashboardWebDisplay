@@ -61,8 +61,7 @@ export default function Configurations() {
                 router.push('/pages/dashboard', { scroll: false })
             })
             .catch(error => {
-                // TODO: Pass error form API back to frontend
-                setError("Could not connect to meter")
+                setError(error.message || "Could not connect to meter")
                 setIsLoading(false)
             });
     }
@@ -74,6 +73,14 @@ export default function Configurations() {
                 {/* Configuration form for setting up the P1 meter dashboard */}
                 <form onSubmit={onSubmit} method="POST">
                     <div>
+                        {/* First-time setup disclaimer */}
+                        <div className="mb-4 rounded-md border border-gray-600 bg-gray-900 px-4 py-3">
+                            <p className="text-sm font-medium text-gray-300">Before you continue</p>
+                            <p className="mt-1 text-sm text-gray-400">
+                                If this is your first time setting up a HomeWizard P1 meter, you will need to physically press the button on the device during setup. Make sure you are standing next to the meter. Once prompted, you have <span className="text-white font-medium">30 seconds</span> to press the button and click Save again.
+                            </p>
+                        </div>
+
                         <div className="my-2">
                             <label htmlFor="location" className="block bg-black text-sm font-medium leading-6">
                                 Meter Brand

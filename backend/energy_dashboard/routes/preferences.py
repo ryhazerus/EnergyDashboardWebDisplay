@@ -1,5 +1,6 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 import datetime
+from homewizard_energy import DisabledError
 from energy_dashboard.database.database_handler import db_handler
 from energy_dashboard.models.connection_request import ConnectionRequest
 from energy_dashboard.models.response import DefaultResponse
@@ -35,9 +36,30 @@ def parse_gas_price(gas_price):
 
 @router.post("/check")
 async def check_meter(conn_request: ConnectionRequest):
-    # Validate meter settings by calling the designated meter API
-    if not await valid_meter(conn_request):
-        return DefaultResponse(status=404, message="No Smart Meter Found", body={}).model_dump()
+    # If we already have a token stored for this IP, pass it so the validator can
+    # verify connectivity without hitting the button-press flow again.
+    existing_token = None
+    try:
+        rows = db_handler.get_smart_meters()
+        if rows:
+            existing = dict(rows[0])
+            if existing.get("ip_address") == conn_request.meter_ip_address and existing.get("api_token"):
+                existing_token = existing["api_token"]
+    except Exception:
+        pass
+
+    # Validate meter settings by calling the designated meter API.
+    # DisabledError propagates when the device is v2 but token creation is not enabled.
+    try:
+        meter_info = await valid_meter(conn_request, existing_token)
+    except DisabledError:
+        raise HTTPException(
+            status_code=403,
+            detail="Press the button on your HomeWizard device, then click Save again within 30 seconds.",
+        )
+
+    if not meter_info:
+        raise HTTPException(status_code=404, detail="No Smart Meter Found")
 
     # Insert base meter information in the config database
     db_handler.insert_smart_meter(
@@ -45,6 +67,8 @@ async def check_meter(conn_request: ConnectionRequest):
         meter_name=conn_request.meter_brand,
         timestamp=datetime.datetime.now(),
         ip_address=conn_request.meter_ip_address,
+        api_version=meter_info["api_version"],
+        api_token=meter_info.get("token"),
     )
 
     # Always resolve to a valid gas price format

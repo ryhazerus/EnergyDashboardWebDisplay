@@ -56,7 +56,7 @@ export default function Home() {
         <div className="row-span-3 mx-4 my-12 ...">
           <RadialGauge
             radius={150}
-            value={dataState.dataStream?.data_p1_meter?.active_power_w}
+            value={dataState.dataStream?.data_p1_meter?.power_w}
             maxValue={5000}
             unit="w"
             gaugeBackground="#2c134d"

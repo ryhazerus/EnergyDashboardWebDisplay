@@ -19,7 +19,8 @@ export default class MeterService {
             });
 
             if (!response.ok) {
-                throw new Error(JSON.stringify(response));
+                const errorData = await response.json().catch(() => ({}));
+                throw new Error(errorData?.detail || "Could not connect to meter");
             }
 
             return await response.json();
