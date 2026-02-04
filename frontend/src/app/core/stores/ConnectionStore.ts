@@ -2,12 +2,12 @@ import { create } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
 import type { } from '@redux-devtools/extension' // required for devtools typing
 
-interface BearState {
+interface ConnectionState {
     meter: UserConfiguration
     setMeter: (by: UserConfiguration) => void
 }
 
-export const useConnectionStore = create<BearState>()(
+export const useConnectionStore = create<ConnectionState>()(
     devtools(
         persist(
             (set) => ({

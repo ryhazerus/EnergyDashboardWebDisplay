@@ -126,14 +126,14 @@ class DatabaseHandler:
             )
 
             row = cursor.fetchone()
-            return row if row else ("No data", 0.0)
+            return row if row else (0.0,)
 
     def insert_gas_reading(
             self,
             meter_type: str,
             smart_meter_id: int,
             timestamp: str,
-            value: str,
+            value: float,
             unit: str,
     ):
         with self.connect() as conn:
@@ -151,7 +151,7 @@ class DatabaseHandler:
             meter_type: str,
             smart_meter_id: int,
             timestamp: str,
-            value: str,
+            value: float,
             unit: str,
             is_import: bool,
     ):
@@ -170,7 +170,7 @@ class DatabaseHandler:
             meter_type: str,
             smart_meter_id: int,
             timestamp: str,
-            value: str,
+            value: float,
             unit: str,
     ):
         with self.connect() as conn:
@@ -195,7 +195,7 @@ class DatabaseHandler:
             conn.row_factory = sqlite3.Row
             cursor = conn.cursor()
 
-            cursor.execute(f"SELECT * FROM smart_meters WHERE id == {meter_id} LIMIT 1")
+            cursor.execute("SELECT * FROM smart_meters WHERE id = ? LIMIT 1", (meter_id,))
             return cursor.fetchall()
 
     def get_gas_readings(self) -> List[Tuple]:

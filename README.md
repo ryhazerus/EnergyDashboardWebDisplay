@@ -29,6 +29,11 @@ To get started, simply follow these steps:
    docker compose up --build -d
    ```
 
+   > If you are on an older version of Docker that does not include the Compose plugin, use the standalone command instead:
+   > ```bash
+   > docker-compose up --build -d
+   > ```
+
 3. Access the application:
 
    - Frontend: [http://localhost:8001](http://localhost:8001)
@@ -74,7 +79,7 @@ This project uses the following technologies:
 - [x] Nothing is currently working but everything is there
 - [x] Meters for Energy and Gas are included
 - [x] Local db for graphing daily usage is available
-- [ ] Meter for water is included
+- [x] Meter for water is included
 - [x] Configurable tariffs for gas prices
 - [ ] Configurable tariffs for energy prices
 - [ ] Configurable Meters for users

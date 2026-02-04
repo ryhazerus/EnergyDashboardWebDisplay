@@ -48,17 +48,17 @@ async def websocket_endpoint(websocket: WebSocket):
         return
 
     model = EnergyDisplayX()
+    meter_parser = MeterParser(db_handler)
+    external_parser = ExternalModuleParser(db_handler)
     async with _create_api_client(smart_meter) as api:
         try:
             while True:
                 model.data_p1_meter = await api.measurement()
 
                 # Parse base meter values
-                meter_parser = MeterParser(db_handler)
                 meter_parser.parse_external_modules(model.data_p1_meter)
 
                 # Parse external meter values
-                external_parser = ExternalModuleParser(db_handler)
                 external_modules = model.data_p1_meter.external_devices
                 if model.data_p1_meter.external_devices:
                     external_parser.parse_external_modules(external_modules)

@@ -12,6 +12,6 @@ export type TailwindColor =
   | "blue"
   | "indigo"
   | "purple"
-  | "fushia"
+  | "fuchsia"
   | "pink"
   | "rose";

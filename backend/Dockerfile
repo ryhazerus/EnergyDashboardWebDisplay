@@ -23,7 +23,7 @@ COPY pyproject.toml poetry.lock ./
 # (/usr/local/lib), not into /app.  The runtime volume mount (./backend:/app)
 # therefore cannot clobber them.
 RUN poetry config virtualenvs.create false \
-    && poetry install --no-root --no-interaction --no-ansi
+    && poetry install --no-root --no-interaction --no-ansi --only main
 
 COPY . .
 

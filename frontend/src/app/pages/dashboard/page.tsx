@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import RadialGauge from "../../components/gauges/RadialGauge";
 import MeterGauge from "../../components/gauges/MeterGauge";
 import ComparisonGauge from "../../components/gauges/ComparisonGauge";
@@ -20,7 +20,7 @@ export default function Home() {
   const router = useRouter();
   const connectionState = useConnectionStore();
   const dataState = useDataStore();
-  const meterService = new MeterService(dataState);
+  const meterService = useMemo(() => new MeterService(dataState), [dataState]);
   const [open, setOpen] = useState(false)
 
   useEffect(() => {
@@ -30,7 +30,7 @@ export default function Home() {
     }
 
     // Start websocket service, this might need some error handling
-    meterService.pollMeterData();
+    return meterService.pollMeterData();
   }, []);
 
   const calcGasUsageEur = (gas_price: number, gas_usage: number) => {
@@ -64,15 +64,15 @@ export default function Home() {
             fontColor="#eaeaea"
           />
           <ComparisonGauge
-            valueIn={(((dataState.dataStream.edx_energy_export_live * 5) / 3600) / 1000)}
-            valueOut={(((dataState.dataStream.edx_energy_live * 5) / 3600) / 1000)}
+            valueIn={dataState.dataStream?.edx_energy_export_live ?? 0}
+            valueOut={dataState.dataStream?.edx_energy_live ?? 0}
             unit={'kWh'}
           />
         </div>
         <div className="col-span-2 ...">
           <RadialGauge
             radius={90}
-            value={dataState.dataStream.edx_water_live}
+            value={dataState.dataStream?.edx_water_live}
             maxValue={100}
             unit="L"
             gaugeBackground="#1b3b50"
@@ -83,7 +83,7 @@ export default function Home() {
         <div className="row-span-2 col-span-2 ...">
           <RadialGauge
             radius={110}
-            value={dataState.dataStream.edx_gas_live}
+            value={dataState.dataStream?.edx_gas_live}
             maxValue={10}
             unit="m3"
             gaugeBackground="#501228"
@@ -94,7 +94,7 @@ export default function Home() {
         <div className="mx-8 col-span-2 ...">
           <MeterGauge
             icon={'/icons/flame.svg'}
-            value={calcGasUsageEur(dataState.dataStream?.edx_gas_costs, dataState.dataStream.edx_gas_live)}
+            value={calcGasUsageEur(dataState.dataStream?.edx_gas_costs, dataState.dataStream?.edx_gas_live)}
             minValue={0}
             maxValue={100}
             unit={"€"}
@@ -108,7 +108,7 @@ export default function Home() {
         <div className="mx-8 col-span-2 ...">
           <MeterGauge
             icon={'/icons/sun.svg'}
-            value={dataState.dataStream.edx_energy_export_live ?? 0.00}
+            value={dataState.dataStream?.edx_energy_export_live ?? 0.00}
             minValue={0}
             maxValue={35}
             unit={"kWh"}

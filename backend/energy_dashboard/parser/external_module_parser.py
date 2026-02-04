@@ -14,12 +14,12 @@ class ExternalModuleParser:
             match module.type:
                 case ExternalDevice.DeviceType.WATER_METER:
                     self.__parse_water_meter(module)
-                    return
+                    continue
                 case ExternalDevice.DeviceType.GAS_METER:
                     self.__parse_gas_meter(module)
-                    return
+                    continue
                 case _:
-                    return
+                    continue
 
     def __parse_water_meter(self, module: ExternalDevice) -> None:
         self.__db.insert_water_reading(module.type.name, SMART_METER_ID, module.timestamp, module.value, module.unit)

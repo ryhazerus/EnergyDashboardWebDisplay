@@ -2,8 +2,6 @@ import dataclasses
 from typing import Optional
 
 from homewizard_energy.models import Measurement
-from pydantic import BaseModel, Field
-
 
 @dataclasses.dataclass
 class EnergyDisplayX:

@@ -11,7 +11,7 @@ export const formatRounding = (value: number): number => {
 
     // Check if the rounded value is NaN, and if so, recursively call the function with 0
     if (isNaN(roundedValue)) {
-        return formatRounding(0);
+        return 0;
     }
 
     // Return the rounded value

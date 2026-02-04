@@ -2,7 +2,7 @@
 interface UserConfiguration {
     meter_brand: string
     meter_ip_address: string,
-    user_gas_price: float
+    user_gas_price: number
 }
 
 interface SmartMeter {
@@ -91,5 +91,5 @@ enum DeviceType {
 }
 
 interface Configuration {
-    is_valid: bool
+    is_valid: boolean
 }

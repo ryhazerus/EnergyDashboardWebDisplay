@@ -52,8 +52,7 @@ export default class MeterService {
         // On close we're going to try to reconnect again
         ws.onclose = () => {
             console.error("Connection Closed!");
-            // TODO: Add a timeout here for easing the load on the frontend
-            this.pollMeterData()
+            setTimeout(() => this.pollMeterData(), 3000);
         };
 
         ws.onerror = (err) => {

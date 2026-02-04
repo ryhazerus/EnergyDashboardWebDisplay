@@ -1,7 +1,6 @@
 import MeterService from "@/app/core/services/MeterService";
 import { useConnectionStore } from "@/app/core/stores/ConnectionStore";
 import { DataState } from "@/app/core/stores/DataStore";
-import router from "next/router";
 import { useState } from "react";
 import { useRouter } from 'next/navigation'
 

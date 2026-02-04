@@ -9,6 +9,7 @@ services:
       - backend
     extra_hosts:
       - "host.docker.internal:host-gateway"
+    restart: unless-stopped
 
   backend:
     build:
@@ -20,3 +21,4 @@ services:
       - ./backend:/app:z
     extra_hosts:
       - "host.docker.internal:host-gateway"
+    restart: unless-stopped
