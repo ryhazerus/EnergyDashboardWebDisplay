@@ -27,10 +27,21 @@ export default function Home() {
     // Set meter check here to see if we are connected to a smart meter
     if (!connectionState.meter.meter_ip_address) {
       router.push('/pages/setup', { scroll: false })
+      return;
     }
 
     // Start websocket service, this might need some error handling
-    return meterService.pollMeterData();
+    let cleanup: (() => void) | undefined;
+
+    (async () => {
+      cleanup = await meterService.pollMeterData();
+    })();
+
+    return () => {
+      if (cleanup) {
+        cleanup();
+      }
+    };
   }, []);
 
   const calcGasUsageEur = (gas_price: number, gas_usage: number) => {
